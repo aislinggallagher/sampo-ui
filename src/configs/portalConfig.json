@@ -3,7 +3,8 @@
     "rootUrl": "",
     "perspectives": {
         "searchPerspectives": [
-            "perspective1"
+            "perspective1",
+            "perspective4"
         ],
         "onlyInstancePages": [
         ]
@@ -39,7 +40,7 @@
     "layoutConfig": {
         "colorPalette": {
             "primary": {
-                "main": "#212121"
+                "main": "#282C2D"
             },
             "secondary": {
                 "main": "#EB1806"

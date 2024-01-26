@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('sm')]: {
       justifyContent: 'center'
     },
-    height: 228,
+    height: 350,
     [theme.breakpoints.down('md')]: {
       height: 170,
       maxWidth: 300
@@ -40,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     '&:hover': {
-      background: `linear-gradient( rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8) ), url(${props.perspective.frontPageImage})`,
+      background: `linear-gradient( rgba(2,118,212), rgba(2,118,212) ), url(${props.perspective.frontPageImage})`,
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       backgroundPosition: 'center'

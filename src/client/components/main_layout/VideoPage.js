@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-    backgroundColor: '#bdbdbd'
+    backgroundColor: '#fff'
   },
   mainContainer: props => ({
     margin: 0,

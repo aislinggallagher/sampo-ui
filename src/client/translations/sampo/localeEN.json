@@ -5,15 +5,15 @@
     "description": "The Sampo-UI framework makes it possible to create highly customizable, user-friendly, and responsive user interfaces using current state-of-the-art JavaScript libraries and data from SPARQL endpoints."
   },
   "appTitle": {
-    "short": "Sampo-UI VRTI demo",
+    "short": "VRTISampo",
     "mobile": "S-UI Demo",
-    "long": "&nbsp; &nbsp; Sampo-UI DBpedia demo &nbsp; &nbsp;",
-    "subheading": "Sampo-UI demo using VRTI data"
+    "long": "&nbsp; &nbsp; VRTI Geospatial Portal &nbsp; &nbsp;",
+    "subheading": "Virtual Record Treasury of Ireland Geospatial Exploration Tool"
   },
   "appDescription1": "Sampo is a web service for searching and studying place names. The search results can be viewed as a table, on maps, and as statistical distributions. Historical and current background maps are provided.",
   "appDescription2": "Start by choosing source dataset(s) and input a place name on the search field. Alternatively you can search by area.",
   "selectPerspective": "Select a perspective to search and browse the knowledge graph:",
-  "mainPageImageLicence": "Images used under license from Shutterstock.com",
+  "mainPageImageLicence": "Fill in image licenses here",
   "backendErrorText": "One of the backend services is not available at the moment. Please try again later.",
   "infoHeader": {
     "toggleInstructions": "Click to show or hide instructions"
@@ -305,8 +305,8 @@
     },
     "perspective1": {
       "label": "Locations",
-      "facetResultsType": "wrtier(s)",
-      "shortDescription": "A perspective for browsing and searching VRTI locations",
+      "facetResultsType": "Townland(s)",
+      "shortDescription": "Faceted search tool for geospatial data within the VRTI Knowledge Graph",
       "longDescription": "",
       "instancePage": {
         "label": "Writer",
@@ -773,29 +773,17 @@
       }
     },
     "perspective4": {
-      "label": "ClientFS",
-      "shortDescription": "Client-side faceted search",
+      "label": "Explore the Map",
+      "shortDescription": "Explore our map to visualise VRTI geospatial data",
       "datasets": {
-        "kotus": {
-          "label": "Names Archive of the Institute for the Languages of Finland (NA)",
-          "aboutLink": "https://nimiarkisto.fi/wiki/Nimiarkisto:Tietoja"
-        },
-        "pnr": {
-          "label": "Finnish Geographic Names Registry (PNR)",
-          "aboutLink": "https://www.maanmittauslaitos.fi/kartat-ja-paikkatieto/asiantuntevalle-kayttajalle/tuotekuvaukset/nimisto"
-        },
-        "warsa_karelian_places": {
-          "label": "Karelian map names (KK)",
-          "aboutLink": "https://www.suomi.fi/palvelut/verkkoasiointi/vanhat-karjalan-kartat-maanmittauslaitos/f51d72a2-510c-4c34-bb3e-b752f5d38250"
-        },
-        "tgn": {
-          "label": "The Getty Thesaurus of Geographic Names (TGN)",
-          "aboutLink": "http://www.getty.edu/research/tools/vocabularies/tgn/about.html"
+        "vrti": {
+          "label": "Virtual Record Treasury of Ireland.",
+          "aboutLink": "https://virtualtreasury.ie/"
         }
       },
       "inputPlaceHolder": "Search place names",
       "searchByArea": "Search by area",
-      "searchByAreaTitle": "Siirrä karttanäkymä tutkittavalle alueelle, aseta zoomaustasoksi vähintään 11 ja käytä alareunan hakupainiketta.",
+      "searchByAreaTitle": "Move the map to the area you would like to search. The zoom level must be set to 11.",
       "searchByAreaCancel": "Cancel",
       "searchByAreaSearch": "Search",
       "properties": {

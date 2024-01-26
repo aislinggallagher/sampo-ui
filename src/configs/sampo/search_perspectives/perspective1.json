@@ -9,7 +9,7 @@
     "baseURI": "https://kb.virtualtreasury.ie/geo/modern-townland/",
     "URITemplate": "<BASE_URI><LOCAL_ID>",
     "facetClass": "b2022:ModernTownland",
-    "frontPageImage": "main_page/works-452x262.jpg",
+    "frontPageImage": "main_page/vrti-outside.jpg",
     "searchMode": "faceted-search",
     "defaultActiveFacets": [
         "prefLabel"
@@ -82,7 +82,7 @@
     ],
     "facets": {
         "prefLabel": {
-        "sortByPredicate": "rdfs:label"
+            "sortByPredicate": "vrti:geo_identifier"
         }
     }
 }

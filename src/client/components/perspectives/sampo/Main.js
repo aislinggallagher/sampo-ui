@@ -77,7 +77,7 @@ const Main = props => {
           [theme.breakpoints.up('xl')]: {
             height: mainPage.bannerDefaultHeight
           },
-          boxShadow: '0 -15px 15px 0px #bdbdbd inset',
+          boxShadow: '0 -15px 15px 0px #fff inset',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
