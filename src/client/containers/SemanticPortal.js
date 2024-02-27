@@ -120,7 +120,6 @@ const SemanticPortal = props => {
     document.documentElement.lang = props.options.currentLocale
     document.querySelector('meta[name="description"]').setAttribute('content', intl.get('html.description'))
   }, [props.options.currentLocale])
-
   return (
     <Box
       sx={theme => ({

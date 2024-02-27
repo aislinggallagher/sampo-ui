@@ -71,20 +71,6 @@ class LeafletMapDialog extends React.Component {
           marginBottom: theme.spacing(1)
         })}
       >
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={this.handleClickOpen}
-          sx={{
-            fontWeigth: 'normal',
-            textTransform: 'none'
-          }}
-        >
-          {intl.get(`perspectives.${perspectiveID}.searchByArea`)}
-          {spatialResultsFetching
-            ? <CircularProgress className={classes.rightIcon} size={24} />
-            : <CropFreeIcon className={classes.rightIcon} />}
-        </Button>
 
         <Dialog
           classes={{

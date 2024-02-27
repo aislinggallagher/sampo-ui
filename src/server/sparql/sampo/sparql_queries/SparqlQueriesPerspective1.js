@@ -2,7 +2,7 @@ const perspectiveID = 'perspective1'
 
 export const workProperties = `
     {
-      ?id vrti:geo_identifier ?prefLabel__id .
+      ?id b2022:geo_identifier ?prefLabel__id .
       BIND(?prefLabel__id AS ?prefLabel__prefLabel)
       BIND(CONCAT("/${perspectiveID}/page/", REPLACE(STR(?id), "^.*\\\\/(.+)", "$1")) AS ?prefLabel__dataProviderUrl)
       BIND(?id as ?uri__id)
@@ -12,16 +12,13 @@ export const workProperties = `
 `
 
 export const knowledgeGraphMetadataQuery = `
-  SELECT * 
-  WHERE {
-    ?id a sd:Dataset ;
-        dct:title ?title ;
-        dct:publisher ?publisher ;
-        dct:rightsHolder ?rightsHolder ;
-        dct:modified ?modified ;
-        dct:source ?databaseDump__id .
-    ?databaseDump__id skos:prefLabel ?databaseDump__prefLabel ;
-                      mmm-schema:data_provider_url ?databaseDump__dataProviderUrl ;
-                      dct:modified ?databaseDump__modified .
-  }
+select ?g (count(*) as ?c)
+  where
+  {
+    graph ?g {
+      ?s ?p ?o
+    }
+}
+group by ?g
+order by DESC(?c)
 `

@@ -82,7 +82,7 @@
     ],
     "facets": {
         "prefLabel": {
-            "sortByPredicate": "vrti:geo_identifier"
+            "sortByPredicate": "b2022:geo_identifier"
         }
     }
 }

@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import intl from 'react-intl-universal'
 import bgImage from '../../../img/main_page/bg2.jpg'
+import Map from '../../facet_results/mapbox/Map'
 
 const styles = theme => ({
   paper: {
@@ -49,15 +50,7 @@ const MainClientFS = props => {
           <Typography className={classes.frontPageText} variant='h5' align='left' color='textPrimary' paragraph>
             {intl.get('appDescription1')}
           </Typography>
-          <Typography className={classes.frontPageText} variant='h5' align='left' color='textPrimary' paragraph>
-            {intl.get('appDescription2')}
-          </Typography>
-          <Typography className={classes.frontPageText} variant='h5' align='left' color='textPrimary' paragraph>
-            {intl.get('appDescription3')}
-          </Typography>
-          <Typography className={classes.frontPageText} variant='h5' align='left' color='textPrimary' paragraph>
-            {intl.get('appDescription4')}
-          </Typography>
+          <Map />
         </div>
       </div>
     </Paper>

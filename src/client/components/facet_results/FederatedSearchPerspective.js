@@ -1,6 +1,4 @@
-import React, { lazy } from 'react'
-import FacetBar from '../facet_bar/FacetBar'
-import FederatedResults from './FederatedResults'
+import React, { lazy, useRef, useEffect, useState } from 'react'
 import Grid from '@mui/material/Grid'
 import { getSpacing } from '../../helpers/helpers'
 
@@ -52,33 +50,7 @@ const FederatedSearchPerspective = props => {
           paddingBottom: '0px !important'
         })}
       >
-        <FacetBar
-          portalConfig={portalConfig}
-          perspectiveConfig={perspective}
-          layoutConfig={layoutConfig}
-          facetedSearchMode='clientFS'
-          facetClass={perspectiveID}
-          resultClass={perspectiveID}
-          facetState={props.clientFSState}
-          clientFSFacetValues={props.clientFSFacetValues}
-          fetchingResultCount={props.clientFSState.textResultsFetching}
-          resultCount={props.resultCount}
-          clientFSState={props.clientFSState}
-          clientFSToggleDataset={props.clientFSToggleDataset}
-          clientFSFetchResults={props.clientFSFetchResults}
-          clientFSClearResults={props.clientFSClearResults}
-          clientFSUpdateQuery={props.clientFSUpdateQuery}
-          clientFSUpdateFacet={props.clientFSUpdateFacet}
-          defaultActiveFacets={props.defaultActiveFacets}
-          leafletMapState={props.leafletMapState}
-          updateMapBounds={props.updateMapBounds}
-          screenSize={screenSize}
-          showError={props.showError}
-          rootUrl={rootUrl}
-          apexChartsConfig={apexChartsConfig}
-          leafletConfig={leafletConfig}
-          networkConfig={networkConfig}
-        />
+        <h1>Area Selected to Query:</h1>
       </Grid>
       <Grid
         item xs={12} md={8}
@@ -100,27 +72,6 @@ const FederatedSearchPerspective = props => {
         })}
       >
         {props.noClientFSResults && <MainClientFS />}
-        {!props.noClientFSResults &&
-          <FederatedResults
-            portalConfig={portalConfig}
-            layoutConfig={layoutConfig}
-            perspective={perspective}
-            screenSize={screenSize}
-            clientFSState={props.clientFSState}
-            clientFSResults={props.clientFSResults}
-            clientFSSortResults={props.clientFSSortResults}
-            leafletMapState={props.leafletMapState}
-            updateMapBounds={props.updateMapBounds}
-            fetchGeoJSONLayersBackend={props.fetchGeoJSONLayersBackend}
-            fetchGeoJSONLayers={props.fetchGeoJSONLayers}
-            clearGeoJSONLayers={props.clearGeoJSONLayers}
-            showError={props.showError}
-            rootUrl={rootUrl}
-            location={props.location}
-            apexChartsConfig={apexChartsConfig}
-            leafletConfig={leafletConfig}
-            networkConfig={networkConfig}
-          />}
       </Grid>
     </Grid>
 
