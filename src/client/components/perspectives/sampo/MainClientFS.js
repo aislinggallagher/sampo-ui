@@ -5,7 +5,12 @@ import Typography from '@mui/material/Typography'
 import Paper from '@mui/material/Paper'
 import intl from 'react-intl-universal'
 import bgImage from '../../../img/main_page/bg2.jpg'
-import Map from '../../facet_results/mapbox/Map'
+import ParishesMap from '../../facet_results/mapbox/ParishesMap'
+import CountiesMap from '../../facet_results/mapbox/CountiesMap'
+import TownlandsMap from '../../facet_results/mapbox/TownlandsMap'
+import BaroniesMap from '../../facet_results/mapbox/BaroniesMap'
+import ProvincesMap from '../../facet_results/mapbox/ProvincesMap'
+
 
 const styles = theme => ({
   paper: {
@@ -50,7 +55,11 @@ const MainClientFS = props => {
           <Typography className={classes.frontPageText} variant='h5' align='left' color='textPrimary' paragraph>
             {intl.get('appDescription1')}
           </Typography>
-          <Map />
+          <ParishesMap />
+          <TownlandsMap />
+          <CountiesMap />
+          <BaroniesMap />
+          <ProvincesMap />
         </div>
       </div>
     </Paper>
