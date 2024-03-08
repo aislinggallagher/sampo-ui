@@ -10,7 +10,7 @@ import CountiesMap from '../../facet_results/mapbox/CountiesMap'
 import TownlandsMap from '../../facet_results/mapbox/TownlandsMap'
 import BaroniesMap from '../../facet_results/mapbox/BaroniesMap'
 import ProvincesMap from '../../facet_results/mapbox/ProvincesMap'
-
+import MapComponent from '../../facet_results/mapbox/MapComponent'
 
 const styles = theme => ({
   paper: {
@@ -46,23 +46,7 @@ const styles = theme => ({
 const MainClientFS = props => {
   const { classes } = props
   return (
-    <Paper className={classes.paper}>
-      <div className={classes.content}>
-        <div className={classes.textContainer}>
-          <Typography className={classes.frontPageHeading} component='h1' variant='h3' align='center' color='textPrimary' gutterBottom>
-            {intl.getHTML('appTitle.long')}
-          </Typography>
-          <Typography className={classes.frontPageText} variant='h5' align='left' color='textPrimary' paragraph>
-            {intl.get('appDescription1')}
-          </Typography>
-          <ParishesMap />
-          <TownlandsMap />
-          <CountiesMap />
-          <BaroniesMap />
-          <ProvincesMap />
-        </div>
-      </div>
-    </Paper>
+    <MapComponent />
   )
 }
 

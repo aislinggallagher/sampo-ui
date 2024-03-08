@@ -137,3 +137,35 @@ a, a:visited, a:hover, a:active {
     height: 18px !important;
     padding-top: 0px !important;
 }
+
+.popup {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  
+  .popup-content {
+    margin-bottom: 10px;
+  }
+  
+  .popup-actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .popup-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  
+  .popup-button:hover {
+    background-color: #0056b3;
+  }
+  
