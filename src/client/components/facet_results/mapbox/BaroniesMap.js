@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
-import placeIcon from '../../../img/markers/location-marker.png'
 import data from './geoJson/centre-points/baronies_centers.json'
 
 const BaroniesMap = () => {
