@@ -1,124 +1,136 @@
-import React, { useState, useEffect, useRef } from 'react'
-import ReactMapGL, { Marker, Popup, FlyToInterpolator } from 'react-map-gl'
-import Supercluster from 'supercluster'
-import useSupercluster from 'use-supercluster'
-import 'mapbox-gl/dist/mapbox-gl.css'
-import data from './geoJson/centre-points/baronies_centers.json'
+import React, { useRef, useEffect } from 'react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import data from './geoJson/centre-points/baronies_centers.json';
+
+// Define your Mapbox access token here
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWlzbGluZ2dhbCIsImEiOiJjbG82ZzIzNXgwb3J2MmtvMmVrMDh3b3E2In0.wzGjrfYTRwGdbuuWSDCBuw';
 
 const BaroniesMap = () => {
+  const mapContainerRef = useRef(null);
   const points = data.map(item => ({
-    type: "Feature",
-    properties: { cluster: false, name_en: item.name_en, name_ga: item.name_ga, co_name: item.co_name },
-    geometry: {
-      type: "Point",
-      coordinates: [
-        parseFloat(item.coordinates[0]),
-        parseFloat(item.coordinates[1])
-      ]
-    }
-  }))
+    coordinates: item.coordinates,
+    title: item.name_en
+  }));
 
-  const [viewport, setViewport] = useState({
-    width: '100%',
-    height: '100%',
-    latitude: 53,
-    longitude: -7,
-    zoom: 6
-  })
-  const mapRef = useRef()
-  const bounds = mapRef.current
-    ? mapRef.current
-        .getMap()
-        .getBounds()
-        .toArray()
-        .flat()
-    : null
+  useEffect(() => {
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/aislinggal/clthhdhah002h01ph614cdamz',
+      center: [0, 0], // Initial center coordinates
+      zoom: 1 // Initial zoom level
+    });
 
-  // get clusters
-  const { clusters, supercluster } = useSupercluster({
-    points,
-    bounds,
-    zoom: viewport.zoom,
-    options: { radius: 75, maxZoom: 20 }
-  })
+    // Add navigation controls to the map
+    map.addControl(new mapboxgl.NavigationControl());
 
-  const [selectedMarker, setSelectedMarker] = useState(null)
-  return (
-    <ReactMapGL
-      {...viewport}
-      mapboxApiAccessToken='pk.eyJ1IjoiYWlzbGluZ2dhbCIsImEiOiJjbG82ZzIzNXgwb3J2MmtvMmVrMDh3b3E2In0.wzGjrfYTRwGdbuuWSDCBuw'
-      onViewportChange={setViewport}
-      mapStyle='mapbox://styles/aislinggal/clthhdhah002h01ph614cdamz'
-      ref={mapRef}
-    >
-      {clusters.map(cluster => {
-      // every cluster point has coordinates
-        const [longitude, latitude] = cluster.geometry.coordinates
-        // the point may be either a cluster or a point
-        const {
-          cluster: isCluster,
-          point_count: pointCount
-        } = cluster.properties
-        // we have a cluster to render
-        if (isCluster) {
-          return (
-            <Marker
-              key={`cluster-${cluster.id}`}
-              latitude={latitude}
-              longitude={longitude}
-              offsetLeft={-20} // Adjust as needed
-              offsetTop={-20} // Adjust as needed
-            >
-              <div
-                className="cluster-marker"
-                style={{
-                  width: `${10 + (pointCount / points.length) * 20}px`,
-                  height: `${10 + (pointCount / points.length) * 20}px`,
-                  color: '#fff',
-                  background: '#1978c8',
-                  borderRadius: '50%',
-                  padding: '10px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}
-                onClick={() => {
-                  const expansionZoom = Math.min(
-                    supercluster.getClusterExpansionZoom(cluster.id),
-                    20
-                  )
-                  setViewport({
-                    ...viewport,
-                    latitude,
-                    longitude,
-                    zoom: expansionZoom,
-                    transitionInterpolator: new FlyToInterpolator({
-                      speed: 2
-                    }),
-                    transitionDuration: 'auto'
-                  })
-                }}
-              >
-                {pointCount}
-              </div>
-            </Marker>
-          )
+    // Add markers
+    points.forEach(marker => {
+      const el = document.createElement('div');
+      el.className = 'marker';
+
+      new mapboxgl.Marker(el)
+        .setLngLat(marker.coordinates)
+        .setPopup(new mapboxgl.Popup().setHTML(`<h3>${marker.title}</h3>`))
+        .addTo(map);
+    });
+
+    // Add clustering
+    map.on('load', () => {
+      map.addSource('markers', {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: points.map(marker => ({
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: marker.coordinates
+            },
+            properties: {
+              title: marker.title
+            }
+          }))
+        },
+        cluster: true,
+        clusterMaxZoom: 14,
+        clusterRadius: 50
+      });
+
+      map.addLayer({
+        id: 'clusters',
+        type: 'circle',
+        source: 'markers',
+        filter: ['has', 'point_count'],
+        paint: {
+          'circle-color': [
+            'step',
+            ['get', 'point_count'],
+            '#51bbd6',
+            100,
+            '#f1f075',
+            750,
+            '#f28cb1'
+          ],
+          'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
         }
+      });
 
-        // we have a single point to render
-        return (
-          <Marker
-            key={`crime-${cluster.properties.name_en}`}
-            latitude={latitude}
-            longitude={longitude}
-            offsetLeft={-20} // Adjust as needed
-            offsetTop={-20} // Adjust as needed
-          >
-            <div style={{ position: 'absolute', left: -7.5, top: -7.5, width: '15px', height: '15px', backgroundColor: 'blue', borderRadius: '50%', cursor: 'pointer' }} />
-          </Marker>
-        )
-      })}
-    </ReactMapGL>
-  )
-}
-export default BaroniesMap
+      map.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'markers',
+        filter: ['has', 'point_count'],
+        layout: {
+          'text-field': '{point_count_abbreviated}',
+          'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+          'text-size': 12
+        }
+      });
+
+      map.addLayer({
+        id: 'unclustered-point',
+        type: 'circle',
+        source: 'markers',
+        filter: ['!', ['has', 'point_count']],
+        paint: {
+          'circle-color': '#11b4da',
+          'circle-radius': 8,
+          'circle-stroke-width': 1,
+          'circle-stroke-color': '#fff'
+        }
+      });
+
+      // When a cluster is clicked, zoom in to it
+      map.on('click', 'clusters', e => {
+        const features = map.queryRenderedFeatures(e.point, {
+          layers: ['clusters']
+        });
+        const clusterId = features[0].properties.cluster_id;
+        map.getSource('markers').getClusterExpansionZoom(clusterId, (err, zoom) => {
+          if (err) return;
+
+          map.easeTo({
+            center: features[0].geometry.coordinates,
+            zoom: zoom
+          });
+        });
+      });
+
+      // Change the cursor to a pointer when hovering over a cluster
+      map.on('mouseenter', 'clusters', () => {
+        map.getCanvas().style.cursor = 'pointer';
+      });
+
+      map.on('mouseleave', 'clusters', () => {
+        map.getCanvas().style.cursor = '';
+      });
+    });
+
+    return () => map.remove(); // Clean up on unmount
+  }, []);
+
+  return <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />;
+};
+
+export default BaroniesMap;

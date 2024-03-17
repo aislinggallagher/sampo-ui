@@ -12,6 +12,11 @@ const CountiesMap = () => {
   })
 
   const [selectedMarker, setSelectedMarker] = useState(null)
+  const handleMarkerClick = (selectedMarker) => {
+    // Open Google Maps link with the marker's coordinates
+    //console.log(selectedMarker)
+    window.open(`https://kb.virtualtreasury.ie/lodview/geo/modern-county/appellation/${selectedMarker}.html`)
+  }
 
   return (
     <ReactMapGL
@@ -41,7 +46,7 @@ const CountiesMap = () => {
               <p>Longitude: {selectedMarker.coordinates[0]}</p>
             </div>
             <div className='popup-actions'>
-              <button className='popup-button'>Action 1</button>
+              <button className='popup-button' onClick={() => handleMarkerClick(selectedMarker.name_en)}>Action 1</button>
               <button className='popup-button'>Action 2</button>
             </div>
           </div>
