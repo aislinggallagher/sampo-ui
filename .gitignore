@@ -6,3 +6,4 @@ dist
 token.json
 credentials.json
 .DS_Store
+src/client/components/facet_results/mapbox/geoJson/centre-points/townlands_centers.json
