@@ -16,8 +16,8 @@ const ProvincesMap = () => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/aislinggal/clthhifae01aj01pja0dabz1k',
-      center: [53, -7], // Initial center coordinates
-      zoom: 1 // Initial zoom level
+      center: [-7, 53], // Initial center coordinates
+      zoom: 3 // Initial zoom level
     });
 
     mapRef.current = map;
@@ -85,10 +85,10 @@ const ProvincesMap = () => {
         source: 'markers',
         filter: ['!', ['has', 'point_count']],
         paint: {
-          'circle-color': '#11b4da',
+          'circle-color': '#ffffff',
           'circle-radius': 8,
-          'circle-stroke-width': 1,
-          'circle-stroke-color': '#fff'
+          'circle-stroke-width': 2,
+          'circle-stroke-color': '#000000'
         }
       });
     });
