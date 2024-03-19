@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import data from './geoJson/centre-points/baronies_centers.json';
@@ -8,10 +8,9 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYWlzbGluZ2dhbCIsImEiOiJjbG82ZzIzNXgwb3J2MmtvM
 
 const BaroniesMap = () => {
   const mapContainerRef = useRef(null);
-  const points = data.map(item => ({
-    coordinates: item.coordinates,
-    title: item.name_en
-  }));
+  const mapRef = useRef(null);
+  const [selectedMarker, setSelectedMarker] = useState(null);
+  const popupRef = useRef(null);
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -21,19 +20,10 @@ const BaroniesMap = () => {
       zoom: 1 // Initial zoom level
     });
 
+    mapRef.current = map;
+
     // Add navigation controls to the map
     map.addControl(new mapboxgl.NavigationControl());
-
-    // Add markers
-    points.forEach(marker => {
-      const el = document.createElement('div');
-      el.className = 'marker';
-
-      new mapboxgl.Marker(el)
-        .setLngLat(marker.coordinates)
-        .setPopup(new mapboxgl.Popup().setHTML(`<h3>${marker.title}</h3>`))
-        .addTo(map);
-    });
 
     // Add clustering
     map.on('load', () => {
@@ -41,14 +31,15 @@ const BaroniesMap = () => {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
-          features: points.map(marker => ({
+          features: data.map(item => ({
             type: 'Feature',
             geometry: {
               type: 'Point',
-              coordinates: marker.coordinates
+              coordinates: item.coordinates
             },
             properties: {
-              title: marker.title
+              name_en: item.name_en,
+              name_ga: item.name_ga
             }
           }))
         },
@@ -100,35 +91,94 @@ const BaroniesMap = () => {
           'circle-stroke-color': '#fff'
         }
       });
+    });
 
-      // When a cluster is clicked, zoom in to it
-      map.on('click', 'clusters', e => {
-        const features = map.queryRenderedFeatures(e.point, {
-          layers: ['clusters']
-        });
-        const clusterId = features[0].properties.cluster_id;
-        map.getSource('markers').getClusterExpansionZoom(clusterId, (err, zoom) => {
-          if (err) return;
+    // Add onclick event to each unclustered marker to show popup
+    map.on('click', 'unclustered-point', e => {
+      setSelectedMarker(e.features[0].properties.name_en);
+      const coordinates = e.features[0].geometry.coordinates.slice();
+      const nameEn = e.features[0].properties.name_en;
+      const nameGa = e.features[0].properties.name_ga;
+      const lat = e.features[0].geometry.coordinates[1];
+      const long = e.features[0].geometry.coordinates[0];
 
-          map.easeTo({
-            center: features[0].geometry.coordinates,
-            zoom: zoom
-          });
-        });
+      const popupContent = document.createElement('div');
+      popupContent.innerHTML = `
+        <div style="padding: 10px; background-color: #fff; border-radius: 5px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);">
+          <h2>${nameEn}</h2>
+          <h3>${nameGa}</h3>
+          <p>Latitude: ${lat}</p>
+          <p>Longitude: ${long}</p>
+          <button id="buttonClose" style="position: absolute; top: 5px; right: 5px; background-color: transparent; border: none; cursor: pointer; font-size: 16px; color: #333;">&times;</button>
+          <div>
+            <button id="button1" style="padding: 5px 10px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer; transition: background-color 0.3s; margin-right: 5px;">Oscar Search</button>
+            <button id="button2" style="padding: 5px 10px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer; transition: background-color 0.3s;">Action 2</button>
+          </div>
+        </div>
+      `;
+
+      // Attach click event listener to the "Action 1" button
+      popupContent.querySelector('#button1').addEventListener('click', () => handleButtonClick(nameEn));
+
+      // Attach click event listener to the close button
+      popupContent.querySelector('#buttonClose').addEventListener('click', () => {
+        if (popupRef.current) {
+          popupRef.current.remove();
+          setSelectedMarker(null);
+        }
       });
 
-      // Change the cursor to a pointer when hovering over a cluster
-      map.on('mouseenter', 'clusters', () => {
-        map.getCanvas().style.cursor = 'pointer';
-      });
+      // Close the previous popup if any
+      if (popupRef.current) {
+        popupRef.current.remove();
+      }
 
-      map.on('mouseleave', 'clusters', () => {
-        map.getCanvas().style.cursor = '';
+      const popup = new mapboxgl.Popup({ closeButton: false })
+        .setLngLat(coordinates)
+        .setDOMContent(popupContent)
+        .addTo(map);
+      
+      // Update popupRef with the new popup instance
+      popupRef.current = popup;
+    });
+
+    // Add event listener for clicking on cluster markers
+    map.on('click', 'clusters', e => {
+      const features = map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+      const clusterId = features[0].properties.cluster_id;
+      map.getSource('markers').getClusterExpansionZoom(clusterId, (err, zoom) => {
+        if (err) return;
+
+        map.easeTo({
+          center: features[0].geometry.coordinates,
+          zoom: zoom
+        });
       });
     });
 
+    // Listen to moveend event to check if selected marker is still visible after map movement
+    map.on('moveend', () => {
+      if (selectedMarker && popupRef.current) {
+        const markerFeature = data.find(item => item.name_en === selectedMarker);
+        if (markerFeature) {
+          const markerCoordinates = markerFeature.coordinates;
+          const markerLngLat = new mapboxgl.LngLat(markerCoordinates[0], markerCoordinates[1]);
+          if (!map.getBounds().contains(markerLngLat)) {
+            popupRef.current.remove();
+            setSelectedMarker(null);
+          }
+        }
+      }
+    });
+
     return () => map.remove(); // Clean up on unmount
-  }, []);
+  }, []); // Empty dependency array for initial setup
+
+  // Function to handle button click for "Action 1"
+  function handleButtonClick(nameEn) {
+    const markerName = nameEn
+    window.open(`https://oscar.virtualtreasury.ie/oscar/index.html?text=${markerName}`)
+  }
 
   return <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />;
 };
