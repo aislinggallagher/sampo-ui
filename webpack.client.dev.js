@@ -11,6 +11,7 @@ module.exports = merge(common, {
     historyApiFallback: true,
     devMiddleware: {
       writeToDisk: true
-    }
+    },
+    allowedHosts: 'auto' | 'all'
   }
 })
