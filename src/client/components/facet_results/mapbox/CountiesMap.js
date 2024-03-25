@@ -104,7 +104,7 @@ const CountiesMap = () => {
 
       const popupContent = document.createElement('div');
       popupContent.innerHTML = `
-        <div style="padding: 10px; background-color: #fff; border-radius: 5px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; background-color: #fff; border-radius: 5px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); position: relative;">
           <h2>${nameEn}</h2>
           <h3>${nameGa}</h3>
           <p>Latitude: ${lat}</p>
@@ -112,7 +112,6 @@ const CountiesMap = () => {
           <button id="buttonClose" style="position: absolute; top: 5px; right: 5px; background-color: transparent; border: none; cursor: pointer; font-size: 16px; color: #333;">&times;</button>
           <div>
             <button id="button1" style="padding: 5px 10px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer; transition: background-color 0.3s; margin-right: 5px;">Oscar Search</button>
-            <button id="button2" style="padding: 5px 10px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer; transition: background-color 0.3s;">Action 2</button>
           </div>
         </div>
       `;

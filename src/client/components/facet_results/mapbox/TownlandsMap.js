@@ -116,10 +116,11 @@ const TownlandsMap = () => {
           ).join('')}</tr>`
         ).join('')}</table>`;
 
-        const handleButtonClick = (nameEn) => {
-          // Implement your button click action here
-          console.log(`Button clicked for marker: ${nameEn}`);
-        };
+        // Function to handle button click for "Action 1"
+        function handleButtonClick(nameEn) {
+          const markerName = nameEn
+          window.open(`https://oscar.virtualtreasury.ie/oscar/index.html?text=${markerName}`)
+        }
 
         const closePopup = () => {
           if (popupRef.current) {
@@ -133,7 +134,7 @@ const TownlandsMap = () => {
 
         // Render the JSX content into the container element
         ReactDOM.render(
-          <div style={{ padding: '10px', backgroundColor: '#fff', borderRadius: '5px', boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '10px', backgroundColor: '#fff', borderRadius: '5px', boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)' }}>
             <h2>{nameEn}</h2>
             <h3>{nameGa}</h3>
             <p>Latitude: {lat}</p>
@@ -145,13 +146,10 @@ const TownlandsMap = () => {
             <div style={{ marginTop: '10px' }} dangerouslySetInnerHTML={{ __html: linksHTML }} />
             <div style={{ marginTop: '10px' }}>
               <button
-                style={{ padding: '5px 10px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer', transition: 'background-color 0.3s', marginRight: '5px' }}
+                style={{ padding: '5px 10px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer', transition: 'background-color 0.3s', position: 'relative', margin: '0 auto' }}
                 onClick={() => handleButtonClick(nameEn)}
-              >Action 1</button>
-              <button
-                style={{ padding: '5px 10px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '3px', cursor: 'pointer', transition: 'background-color 0.3s' }}
-                onClick={() => handleButtonClick(nameEn)}
-              >Action 2</button>
+              >OSCAR Search
+              </button>
             </div>
           </div>,
           container

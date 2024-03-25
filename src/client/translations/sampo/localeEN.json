@@ -13,7 +13,7 @@
   "appDescription1": "Explore the map! Choose to search by province, county, barony, parish or townland.",
   "appDescription2": "Start by choosing source dataset(s) and input a place name on the search field. Alternatively you can search by area.",
   "selectPerspective": "Select a perspective to search and browse the knowledge graph:",
-  "mainPageImageLicence": "Fill in image licenses here",
+  "mainPageImageLicence": "VRTI, 2024",
   "backendErrorText": "One of the backend services is not available at the moment. Please try again later.",
   "infoHeader": {
     "toggleInstructions": "Click to show or hide instructions"
