@@ -389,7 +389,7 @@ createBackendSearchConfig().then(backendSearchConfig => {
     ? 'NODE_ENV=development, so Webpack serves the React app'
     : `Static files (e.g. the React app) will be served from ${publicPath}`
 
-  const port = app.get('port')
+  const port = app.get('port') || 8080
 
   app.listen(port, () =>
     console.log(`
