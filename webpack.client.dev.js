@@ -12,6 +12,6 @@ module.exports = merge(common, {
     devMiddleware: {
       writeToDisk: true
     },
-    allowedHosts: 'auto' | 'all'
+    allowedHosts: 'all'
   }
 })
