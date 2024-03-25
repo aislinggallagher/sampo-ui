@@ -19,7 +19,8 @@
     "server": "cross-env BABEL_ENV=node NODE_ENV=development nodemon -r dotenv/config src/server/index.js --exec babel-node",
     "utils": "cross-env BABEL_ENV=node NODE_ENV=development nodemon -r dotenv/config src/server/sparql/Utils.js --exec babel-node",
     "sitemap": "cross-env BABEL_ENV=node babel-node src/server/sitemap_generator/SitemapGenerator.js",
-    "translate": "cross-env BABEL_ENV=node babel-node src/server/translations_generator/index.js"
+    "translate": "cross-env BABEL_ENV=node babel-node src/server/translations_generator/index.js",
+    "start": "nodemon src/server/index.js --exec babel-node"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.1.3",
@@ -106,6 +107,7 @@
     "googleapis": "^71.0.0",
     "html-webpack-plugin": "^5.3.1",
     "json-loader": "^0.5.7",
+    "nodemon": "^3.1.0",
     "sass": "^1.43.4",
     "sass-loader": "^10.2.0",
     "sitemap": "^6.3.5",
