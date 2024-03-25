@@ -18,7 +18,7 @@ const TownlandsMap = () => {
       container: mapContainerRef.current,
       style: 'mapbox://styles/aislinggal/clthhfely001q01qoan7i0tjq',
       center: [-7, 53], // Initial center coordinates
-      zoom: 3 // Initial zoom level
+      zoom: 5 // Initial zoom level
     });
 
     mapRef.current = map;
