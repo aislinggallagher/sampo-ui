@@ -10,7 +10,7 @@ module.exports = merge(common, {
     open: true,
     historyApiFallback: true,
     devMiddleware: {
-      publicPath: '/'
+      writeToDisk: true
     }
   }
 })

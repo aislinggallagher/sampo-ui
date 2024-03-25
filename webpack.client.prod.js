@@ -7,6 +7,11 @@ const common = require('./webpack.client.common.js')
 module.exports = merge(common, {
   mode: 'production',
   // devtool: 'source-map',
+  devServer: {
+    devMiddleware: {
+      writeToDisk: true
+    }
+  },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
