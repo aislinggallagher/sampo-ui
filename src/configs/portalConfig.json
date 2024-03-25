@@ -3,7 +3,6 @@
     "rootUrl": "",
     "perspectives": {
         "searchPerspectives": [
-            "perspective1",
             "perspective4"
         ],
         "onlyInstancePages": [
