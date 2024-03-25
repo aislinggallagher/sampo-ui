@@ -144,8 +144,8 @@ const Main = props => {
           </Typography>
         </Box>
         <Grid
-          container spacing={screenSize === 'sm' ? 2 : 1}
-          justifyContent={screenSize === 'xs' || screenSize === 'sm' ? 'center' : 'flex-start'}
+          container spacing={1}
+          justifyContent='center'
         >
           {perspectives.map(perspective => {
             const hideCard = (has(perspective.hideCardOnFrontPage) && perspective.hideCardOnFrontPage)

@@ -17,7 +17,7 @@ const ParishesMap = () => {
       container: mapContainerRef.current,
       style: 'mapbox://styles/aislinggal/clthfeqgu01kl01pigwrn3xl0',
       center: [-7, 53], // Initial center coordinates
-      zoom: 3 // Initial zoom level
+      zoom: 5 // Initial zoom level
     });
 
     mapRef.current = map;
@@ -111,7 +111,7 @@ const ParishesMap = () => {
           <p>Longitude: ${long}</p>
           <button id="buttonClose" style="position: absolute; top: 5px; right: 5px; background-color: transparent; border: none; cursor: pointer; font-size: 16px; color: #333;">&times;</button>
           <div>
-            <button id="button1" style="padding: 5px 10px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer; transition: background-color 0.3s; margin-right: 5px;">Oscar Search</button>
+            <button id="button1" style="padding: 5px 10px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer; transition: background-color 0.3s; margin-right: 5px;">OSCAR Search</button>
           </div>
         </div>
       `;
